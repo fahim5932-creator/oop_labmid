@@ -1,0 +1,71 @@
+I)Global inventory data class:
+
+Static Utility Method (Line 12):
+The method calculateDiscount is a static method in a class that primarily appears to manage data. This violates the Single Responsibility Principle and mixes unrelated functionalities in one class.
+Magic Numbers (Line 8 and 9):
+
+Description: The use of currentProductId and currentOrderId as integers without a clear context or constraints can lead to potential errors, such as ID collisions or overflows.
+
+
+No Access Modifiers on Class & Poor Class Name (Line 4):
+
+The globalInventoryData class lacks an access modifier, which defaults it to package-private. This may not align with its intended scope.
+The class name globalInventoryData uses camel case instead of Pascal case and doesn’t reflect an object-oriented design. The name also suggests a global data holder, which is generally discouraged. This might be potetial code smell
+
+
+
+II)InventoryManagementSystem class:
+
+1. Large main Method (Line 5–22)
+Smell: The main method is handling too many responsibilities, including initializing data, adding products, and processing orders. This violates the Single Responsibility Principle (SRP).
+
+2. Global State Usage (Line 8, globalInventoryData.warehouses)
+Smell: globalInventoryData is directly accessed and modified. This introduces tight coupling and makes it hard to test the system in isolation.
+3. Tightly Coupled Dependencies (Line 14–16)
+Smell: The inventorySystem class directly interacts with the global inventory data structure and specific product attributes (like discount type and value).
+
+4. No Validation for Inputs (Line 14–18)
+Smell: Product addition and order processing do not validate inputs (e.g., warehouse ID, discount type).
+
+
+
+III)Inventory System class:
+
+1. Class Structure Smell (Too Many Responsibilities)
+Line 5 - 7: The inventorySystem class is handling multiple responsibilities, including inventory management, product management, order processing, and report generation. This violates the Single Responsibility Principle (SRP).
+
+2. Global Dependency Smell
+Lines 29, 52, 82, 94, 122: The code heavily relies on globalInventoryData for accessing shared data structures like warehouses, products, and orders. This creates a global state dependency, making testing and debugging difficult.
+3. Complex Method Smell (Long Method)
+Line 29: The addProduct method is too long and includes multiple nested conditions, which reduces readability and maintainability.
+
+4. Lack of Error Handling in Order Processing
+Line 123: In the process order method, there's minimal error handling. For example, the method directly returns -1 when conditions fail, which might not provide enough context about the failure.
+5. Date as a String
+Line 133: order.createdAt is stored as a string, which is not ideal for d
+
+6. Duplicate Logic in Report Generation
+Line 155 & 168: The methods GenerateInventoryReport and GenerateSalesReport use similar logic for report formatting. This violates the DRY principle.
+
+
+IV) ReportScheduler class:
+1)  Lack of Cohesion in Method
+Line 4: public static void scheduleReport(String reportType, String frequency) 
+
+
+The method scheduleReport directly handles scheduling but does not separate concerns or abstract details of scheduling (e.g., frequency validation, report creation).
+
+This might be a potential code smell . Other than that no other code smell is found in this class
+
+
+V) class Warehouse:
+
+1. Direct Field Access
+Code Smell: Public fields (id, name, location) are directly accessible from outside the class.
+Line Numbers: 3–5
+Explanation:
+Allowing public access to fields violates 
+
+
+
+
